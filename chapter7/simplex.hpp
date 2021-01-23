@@ -79,6 +79,12 @@ public:
 
     const auto& getFinalA() const {return A_;}
 private:
+
+    //find the most negative value in the last row.
+    //note that we have written the objective function
+    // F = ax1 +  bx2 .. as [-a, -b, ...],
+    // so the most negative value is actually the larget 
+    // coefficient in F
     bool pivotColumn(size_t& pos) const
     {
         pos = 0;
@@ -92,6 +98,11 @@ private:
         if(min >= 0) return false;
         return true;
     }
+
+    // pivotColumn give us the directon where we move to,
+    // pivotRow tells us how large we should move,
+    // to avoid move outside the feasible region, choose the smallest step,
+    // then eliminite the whole column except the pivotRow being 1
     bool pivotRow(size_t col)
     {
         size_t rowPos = A_.rows();
@@ -119,6 +130,7 @@ private:
         return true;
     }
 
+    //basic column : has only one one and all others zero.
     bool basicColumn(size_t col, double& x) const
     {
         size_t count = 0;
@@ -133,7 +145,7 @@ private:
         }
 
         if(count == 1 && std::abs(A_(rowPos, col) - 1) < 1.0e-8) {
-            x = A_(rowPos, A_.cols()-1);
+            x = A_(rowPos, A_.cols()-1); // the solution of that variable 
             return true;
         }
 
