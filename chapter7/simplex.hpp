@@ -1,4 +1,5 @@
 /*
+ * https://people.richland.edu/james/ictcm/2006/simplex.html
  * run example:
  * maximize obj f = 
  *      15 * x1 + 17 * x2 + 20 * x3 with conditions:
